@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.luck.picture.lib.widget.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -41,6 +42,19 @@
         android:text="00:00"
         android:textColor="@color/ps_color_white"
         android:textSize="11sp" />
-
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        tools:text="音频名"
+        android:gravity="center_vertical"
+        android:visibility="gone"
+        android:textColor="@color/ps_color_white"
+        android:layout_alignTop="@+id/tv_duration"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:textSize="11sp" />
 
 </com.luck.picture.lib.widget.SquareRelativeLayout>

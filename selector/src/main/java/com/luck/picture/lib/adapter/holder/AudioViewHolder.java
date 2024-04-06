@@ -20,10 +20,12 @@ import com.luck.picture.lib.utils.StyleUtils;
  */
 public class AudioViewHolder extends BaseRecyclerMediaHolder {
     private final TextView tvDuration;
+    private final TextView tvName;
 
     public AudioViewHolder(@NonNull View itemView, SelectorConfig config) {
         super(itemView, config);
         tvDuration = itemView.findViewById(R.id.tv_duration);
+        tvName = itemView.findViewById(R.id.tv_audio_name);
         SelectMainStyle adapterStyle = selectorConfig.selectorStyle.getSelectMainStyle();
         int drawableLeft = adapterStyle.getAdapterDurationDrawableLeft();
         if (StyleUtils.checkStyleValidity(drawableLeft)) {
@@ -58,6 +60,9 @@ public class AudioViewHolder extends BaseRecyclerMediaHolder {
     public void bindData(LocalMedia media, int position) {
         super.bindData(media, position);
         tvDuration.setText(DateUtils.formatDurationTime(media.getDuration()));
+        if(tvName!=null) {
+            tvName.setText(media.getFileName());
+        }
     }
 
     @Override

@@ -78,6 +78,12 @@ public final class InjectResourceSource {
     public static final int PREVIEW_ITEM_AUDIO_LAYOUT_RESOURCE = 10;
 
     /**
+     * {@link PictureImageGridAdapter}  audio adapter item layout
+     * {@link R.layout.ps_item_grid_camera}
+     */
+    public static final int MAIN_ITEM_CAMERA_LAYOUT_RESOURCE = 11;
+
+    /**
      * getLayoutResource
      *
      * @param context

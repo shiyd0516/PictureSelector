@@ -114,7 +114,8 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<BaseRecyclerMe
         int layoutResourceId;
         switch (viewType) {
             case ADAPTER_TYPE_CAMERA:
-                return R.layout.ps_item_grid_camera;
+                layoutResourceId = InjectResourceSource.getLayoutResource(mContext, InjectResourceSource.MAIN_ITEM_CAMERA_LAYOUT_RESOURCE, mConfig);
+                return layoutResourceId != InjectResourceSource.DEFAULT_LAYOUT_RESOURCE ? layoutResourceId : R.layout.ps_item_grid_camera;
             case ADAPTER_TYPE_VIDEO:
                 layoutResourceId = InjectResourceSource.getLayoutResource(mContext, InjectResourceSource.MAIN_ITEM_VIDEO_LAYOUT_RESOURCE, mConfig);
                 return layoutResourceId != InjectResourceSource.DEFAULT_LAYOUT_RESOURCE ? layoutResourceId : R.layout.ps_item_grid_video;

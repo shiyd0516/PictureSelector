@@ -120,13 +120,31 @@ public class PreviewAudioHolder extends BasePreviewHolder {
         String fileSize = PictureFileUtils.formatAccurateUnitFileSize(media.getSize());
         loadImage(media, PictureConfig.UNSET, PictureConfig.UNSET);
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(media.getFileName()).append("\n").append(dataFormat).append(" - ").append(fileSize);
+        if (!TextUtils.isEmpty(media.getFileName())) {
+            stringBuilder.append(media.getFileName());
+        } else {
+            //如果自定义的文件名不存在，使用url，获取文件名
+            String urlFileName = getFileNameByUrl(path);
+            if (!TextUtils.isEmpty(urlFileName)) {
+                stringBuilder.append(urlFileName);
+            }
+        }
+        String indexOfStr = "";
+        if (media.getDateAddedTime() > 0) {
+            stringBuilder.append("\n").append(dataFormat);
+            indexOfStr += dataFormat;
+        }
+        if (media.getSize() > 0) {
+            stringBuilder.append(" - ").append(fileSize);
+            indexOfStr += " - " + fileSize;
+        }
         SpannableStringBuilder builder = new SpannableStringBuilder(stringBuilder.toString());
-        String indexOfStr = dataFormat + " - " + fileSize;
-        int startIndex = stringBuilder.indexOf(indexOfStr);
-        int endOf = startIndex + indexOfStr.length();
-        builder.setSpan(new AbsoluteSizeSpan(DensityUtil.dip2px(itemView.getContext(), 12)), startIndex, endOf, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
-        builder.setSpan(new ForegroundColorSpan(0xFF656565), startIndex, endOf, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        if (!indexOfStr.isEmpty()) {
+            int startIndex = stringBuilder.indexOf(indexOfStr);
+            int endOf = startIndex + indexOfStr.length();
+            builder.setSpan(new AbsoluteSizeSpan(DensityUtil.dip2px(itemView.getContext(), 12)), startIndex, endOf, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            builder.setSpan(new ForegroundColorSpan(0xFF656565), startIndex, endOf, Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        }
         tvAudioName.setText(builder);
         tvTotalDuration.setText(DateUtils.formatDurationTime(media.getDuration()));
         seekBar.setMax((int) media.getDuration());
@@ -205,6 +223,22 @@ public class PreviewAudioHolder extends BasePreviewHolder {
                 return false;
             }
         });
+    }
+
+    /**
+     * 通过url 获取文件名.
+     * @param url 要处理的url
+     * @return 文件名
+     */
+    private String getFileNameByUrl(String url) {
+        int index = url.lastIndexOf('/');
+        if (index == -1) {
+            return "";
+        }
+        if (index == url.length() - 1) {
+            return "";
+        }
+        return url.substring(index + 1);
     }
 
     /**
