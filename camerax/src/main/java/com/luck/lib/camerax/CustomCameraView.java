@@ -323,10 +323,12 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
                                 if (recordTime < minSecond || outputFileResults.getSavedUri() == null) {
                                     return;
                                 }
+                                stopCheckOrientation();
                                 Uri savedUri = outputFileResults.getSavedUri();
                                 SimpleCameraX.putOutputUri(activity.getIntent(), savedUri);
                                 String outPutPath = FileUtils.isContent(savedUri.toString()) ? savedUri.toString() : savedUri.getPath();
                                 mTextureView.setVisibility(View.VISIBLE);
+                                mCameraPreviewView.setVisibility(View.GONE);
                                 tvCurrentTime.setVisibility(GONE);
                                 if (mTextureView.isAvailable()) {
                                     startVideoPlay(outPutPath);
@@ -533,7 +535,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
                 TimeUnit.MILLISECONDS.toSeconds(recordVideoMaxSecond)
                         - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(recordVideoMaxSecond)));
         tvCurrentTime.setText(format);
-        if (isAutoRotation && buttonFeatures != CustomCameraConfig.BUTTON_STATE_ONLY_RECORDER) {
+        if (isAutoRotation /*&& buttonFeatures != CustomCameraConfig.BUTTON_STATE_ONLY_RECORDER*/) {
             orientationEventListener = new CameraXOrientationEventListener(getContext(), this);
             startCheckOrientation();
         }
@@ -605,6 +607,9 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
         if (mImageAnalyzer != null) {
             mImageAnalyzer.setTargetRotation(orientation);
         }
+        if(mVideoCapture!=null){
+            mVideoCapture.setTargetRotation(orientation);
+        }
     }
 
     /**
@@ -630,6 +635,9 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
                 }
                 if (mImageAnalyzer != null) {
                     mImageAnalyzer.setTargetRotation(mCameraPreviewView.getDisplay().getRotation());
+                }
+                if(mVideoCapture!=null){
+                    mVideoCapture.setTargetRotation(mCameraPreviewView.getDisplay().getRotation());
                 }
             }
         }
@@ -1094,6 +1102,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
                 e.printStackTrace();
             }
         }
+        mCameraPreviewView.setVisibility(VISIBLE);
         mSwitchCamera.setVisibility(VISIBLE);
         mFlashLamp.setVisibility(VISIBLE);
         mCaptureLayout.resetCaptureLayout();
@@ -1149,6 +1158,10 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
         if (videoWidth > videoHeight) {
             int height = (int) ((videoHeight / videoWidth) * getWidth());
             RelativeLayout.LayoutParams videoViewParam = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, height);
+            videoViewParam.addRule(CENTER_IN_PARENT, TRUE);
+            mTextureView.setLayoutParams(videoViewParam);
+        }else{
+            RelativeLayout.LayoutParams videoViewParam = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
             videoViewParam.addRule(CENTER_IN_PARENT, TRUE);
             mTextureView.setLayoutParams(videoViewParam);
         }

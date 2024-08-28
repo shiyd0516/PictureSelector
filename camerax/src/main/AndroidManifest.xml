@@ -6,6 +6,7 @@
         <activity
             android:name="com.luck.lib.camerax.PictureCameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.NoActionBar" />
     </application>
 </manifest>

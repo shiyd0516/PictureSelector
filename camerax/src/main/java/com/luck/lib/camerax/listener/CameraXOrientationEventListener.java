@@ -23,11 +23,11 @@ public class CameraXOrientationEventListener extends OrientationEventListener {
             return;
         }
         int currentRotation;
-        if (orientation > 80 && orientation < 100) {
+        if (orientation >= 45 && orientation < 135) {
             currentRotation = Surface.ROTATION_270;
-        } else if (orientation > 170 && orientation < 190) {
+        } else if (orientation >= 135 && orientation < 225) {
             currentRotation = Surface.ROTATION_180;
-        } else if (orientation > 260 && orientation < 280) {
+        } else if (orientation >= 225 && orientation < 315) {
             currentRotation = Surface.ROTATION_90;
         } else {
             currentRotation = Surface.ROTATION_0;
