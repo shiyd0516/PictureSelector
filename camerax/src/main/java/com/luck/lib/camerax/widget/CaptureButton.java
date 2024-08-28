@@ -384,7 +384,7 @@ public class CaptureButton extends View {
                 PermissionChecker.getInstance().requestPermissions(activity, new String[]{Manifest.permission.RECORD_AUDIO}, new PermissionResultCallback() {
                     @Override
                     public void onGranted() {
-                        postDelayed(longPressRunnable, 500);
+                        //postDelayed(longPressRunnable, 500);
                         ViewGroup customCameraView = getCustomCameraView();
                         if (customCameraView != null && CustomCameraConfig.explainListener != null) {
                             CustomCameraConfig.explainListener.onDismiss(customCameraView);

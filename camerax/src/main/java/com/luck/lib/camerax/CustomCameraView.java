@@ -180,6 +180,8 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
 
     private long recordTime = 0;
 
+    private int videoTargetRotation = 0;
+
     /**
      * 回调监听
      */
@@ -315,6 +317,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
                             outPutCameraFileName, videoFormat, outPutCameraDir);
                 }
                 fileOptions = new VideoCapture.OutputFileOptions.Builder(cameraFile).build();
+                mVideoCapture.setTargetRotation(videoTargetRotation);
                 mVideoCapture.startRecording(fileOptions, mainExecutor,
                         new VideoCapture.OnVideoSavedCallback() {
                             @Override
@@ -601,6 +604,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
 
     @Override
     public void onOrientationChanged(int orientation) {
+        videoTargetRotation = orientation;
         if (mImageCapture != null) {
             mImageCapture.setTargetRotation(orientation);
         }
@@ -783,7 +787,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
             CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(lensFacing).build();
             // Preview
             Preview preview = new Preview.Builder()
-                    .setTargetRotation(mCameraPreviewView.getDisplay().getRotation())
+                    //.setTargetRotation(mCameraPreviewView.getDisplay().getRotation())
                     .build();
             buildVideoCapture();
             // Must unbind the use-cases before rebinding them
@@ -1196,7 +1200,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
      * @param newConfig
      */
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        buildUseCameraCases();
+     //   buildUseCameraCases();
     }
 
     /**
