@@ -415,7 +415,7 @@ public class CaptureButton extends View {
                 ViewGroup customCameraView = getCustomCameraView();
                 if (customCameraView != null) {
                     CustomCameraConfig.explainListener.onPermissionDescription(getContext(), customCameraView,
-                                    Manifest.permission.RECORD_AUDIO);
+                            Manifest.permission.RECORD_AUDIO);
                 }
             }
         }

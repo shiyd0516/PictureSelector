@@ -1200,7 +1200,7 @@ public class CustomCameraView extends RelativeLayout implements CameraXOrientati
      * @param newConfig
      */
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
-     //   buildUseCameraCases();
+        //   buildUseCameraCases();
     }
 
     /**
